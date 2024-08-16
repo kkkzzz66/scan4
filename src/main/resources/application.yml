@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: scan4
+
+server:
+  servlet:
+    context-path: /api
+
+check:
+  apiKey: a2c903cc-b31e-4547-9299-b6d07b7631ab
