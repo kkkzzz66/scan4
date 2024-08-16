@@ -30,5 +30,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: volcano-ap-southeast-1.cr.bytepluses.com/test/scan4:latest
+          tags: volcano-ap-southeast-1.cr.bytepluses.com/test/scan4
+          file: Dockerfile
 
