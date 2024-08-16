@@ -32,4 +32,5 @@ jobs:
           push: true
           tags: volcano-ap-southeast-1.cr.bytepluses.com/test/scan4
           file: Dockerfile
-
+      - name: redeploy
+        run: curl http://101.47.15.45/6FGS959U9epLIJ6crvu4l2TsdpD4Ozyz2M7JEravear/default/scan4
