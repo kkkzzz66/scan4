@@ -97,10 +97,10 @@ public class OkProxyServiceImpl implements OkProxyService {
     }
 
     @Override
-    public String addressCheck(AddressCheckRequest addressCheckRequest) throws Exception {
+    public String addressCheck(AddressCheckRequest addressCheckRequest, Long t) throws Exception {
         String token = UUID.randomUUID().toString();
 
-        String url = "/api/tracker/c/v1/address/check/v1?t=1722936445623";
+        String url = "/api/tracker/c/v1/address/check/v1?t=" + t;
 
         String body = JSONUtil.toJsonStr(addressCheckRequest);
 
@@ -119,6 +119,96 @@ public class OkProxyServiceImpl implements OkProxyService {
                 .header("ok-verify-token", token)
                 .header("x-apikey", apikey)
                 .POST(HttpRequest.BodyPublishers.ofString(body))
+                .build();
+
+        // Send the request and get the response
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return response.body();
+    }
+
+    @Override
+    public String caseViewContent(String viewId, String address, Long t) throws Exception {
+        String token = UUID.randomUUID().toString();
+
+        StringBuilder urlBuilder = new StringBuilder("/api/tracker/c/v1/address/analysis/caseViewContent?viewId=");
+        urlBuilder.append(viewId).append("&address=").append(address).append("&t=").append(t);
+        String url = urlBuilder.toString();
+        String oksign = sign(token, url, null);
+        String apikey = getApikey();
+
+        // Create an HTTP client
+        HttpClient client = HttpClient.newHttpClient();
+
+        // Create a request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://www.oklink.com" + url))
+                .header("accept", "application/json")
+                .header("content-type", "application/json")
+                .header("ok-verify-sign", oksign)
+                .header("ok-verify-token", token)
+                .header("x-apikey", apikey)
+                .GET()
+                .build();
+
+        // Send the request and get the response
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return response.body();
+    }
+
+    @Override
+    public String addressDetail(String address, String chain, String tokenContractAddress, Long t) throws Exception {
+        String token = UUID.randomUUID().toString();
+
+        StringBuilder urlBuilder = new StringBuilder("/api/tracker/c/v1/r1/address/detail?address=");
+        urlBuilder.append(address).append("&chain=").append(chain).append("&tokenContractAddress=").append(tokenContractAddress).append("&t=").append(t);
+        String url = urlBuilder.toString();
+        String oksign = sign(token, url, null);
+        String apikey = getApikey();
+
+        // Create an HTTP client
+        HttpClient client = HttpClient.newHttpClient();
+
+        // Create a request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://www.oklink.com" + url))
+                .header("accept", "application/json")
+                .header("content-type", "application/json")
+                .header("ok-verify-sign", oksign)
+                .header("ok-verify-token", token)
+                .header("x-apikey", apikey)
+                .GET()
+                .build();
+
+        // Send the request and get the response
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return response.body();
+    }
+
+    @Override
+    public String healthyScoreV3(String chain, String address, Long t) throws Exception {
+        String token = UUID.randomUUID().toString();
+
+        StringBuilder urlBuilder = new StringBuilder("/api/tracker/c/v1/r1/healthy/scoreV3?chain=");
+        urlBuilder.append(chain).append("&address=").append(address).append("&t=").append(t);
+        String url = urlBuilder.toString();
+        String oksign = sign(token, url, null);
+        String apikey = getApikey();
+
+        // Create an HTTP client
+        HttpClient client = HttpClient.newHttpClient();
+
+        // Create a request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://www.oklink.com" + url))
+                .header("accept", "application/json")
+                .header("content-type", "application/json")
+                .header("ok-verify-sign", oksign)
+                .header("ok-verify-token", token)
+                .header("x-apikey", apikey)
+                .GET()
                 .build();
 
         // Send the request and get the response
