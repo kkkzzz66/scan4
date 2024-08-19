@@ -46,4 +46,28 @@ public class OkProxyController {
         // Print the response
         return ResponseEntity.ok(responseBody);
     }
+
+    @GetMapping("/tx/addresses/counters")
+    public ResponseEntity<String> txAddressesCounters(@RequestParam(value = "address") String address, @RequestParam(value = "chain") String chain, @RequestParam(value = "tokenContractAddress") String tokenContractAddress, @RequestParam(value = "limit", defaultValue = "10") Integer limit, @RequestParam(value = "offset", defaultValue = "0") Integer offset, @RequestParam(value = "counter", required = false) String counter, @RequestParam(value = "t") Long t) throws Exception {
+        String responseBody = okProxyService.txAddressesCounters(address, chain, tokenContractAddress, limit, offset, counter, t);
+
+        // Print the response
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @GetMapping("/tx/cross/bridge/chain/list")
+    public ResponseEntity<String> bridgeChainList(@RequestParam(value = "address") String address, @RequestParam(value = "t") Long t) throws Exception {
+        String responseBody = okProxyService.bridgeChainList(address, t);
+
+        // Print the response
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @GetMapping("/tx/cross/bridge/list")
+    public ResponseEntity<String> bridgeList(@RequestParam(value = "srcChain", required = false) String srcChain, @RequestParam(value = "destChain", required = false) String destChain, @RequestParam(value = "address") String address, @RequestParam(value = "limit", defaultValue = "10") Integer limit, @RequestParam(value = "offset", defaultValue = "0") Integer offset, @RequestParam(value = "t") Long t) throws Exception {
+        String responseBody = okProxyService.bridgeList(srcChain, destChain, address, limit, offset, t);
+
+        // Print the response
+        return ResponseEntity.ok(responseBody);
+    }
 }

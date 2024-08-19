@@ -216,4 +216,94 @@ public class OkProxyServiceImpl implements OkProxyService {
 
         return response.body();
     }
+
+    @Override
+    public String txAddressesCounters(String address, String chain, String tokenContractAddress, Integer limit, Integer offset, String counter, Long t) throws Exception {
+        String token = UUID.randomUUID().toString();
+
+        StringBuilder urlBuilder = new StringBuilder("/api/tracker/c/v1/r1/tx/addresses/counters?address=");
+        urlBuilder.append(address).append("&chain=").append(chain).append("&tokenContractAddress=").append(tokenContractAddress).append("&limit=").append(limit).append("&offset=").append(offset).append("&counter=").append(counter).append("&t=").append(t);
+        String url = urlBuilder.toString();
+        String oksign = sign(token, url, null);
+        String apikey = getApikey();
+
+        // Create an HTTP client
+        HttpClient client = HttpClient.newHttpClient();
+
+        // Create a request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://www.oklink.com" + url))
+                .header("accept", "application/json")
+                .header("content-type", "application/json")
+                .header("ok-verify-sign", oksign)
+                .header("ok-verify-token", token)
+                .header("x-apikey", apikey)
+                .GET()
+                .build();
+
+        // Send the request and get the response
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return response.body();
+    }
+
+    @Override
+    public String bridgeChainList(String address, Long t) throws Exception {
+        String token = UUID.randomUUID().toString();
+
+        StringBuilder urlBuilder = new StringBuilder("/api/tracker/c/v1/r1/tx/cross/bridge/chain/list?address=");
+        urlBuilder.append(address).append("&t=").append(t);
+        String url = urlBuilder.toString();
+        String oksign = sign(token, url, null);
+        String apikey = getApikey();
+
+        // Create an HTTP client
+        HttpClient client = HttpClient.newHttpClient();
+
+        // Create a request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://www.oklink.com" + url))
+                .header("accept", "application/json")
+                .header("content-type", "application/json")
+                .header("ok-verify-sign", oksign)
+                .header("ok-verify-token", token)
+                .header("x-apikey", apikey)
+                .GET()
+                .build();
+
+        // Send the request and get the response
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return response.body();
+    }
+
+    @Override
+    public String bridgeList(String srcChain, String destChain, String address, Integer limit, Integer offset, Long t) throws Exception {
+        String token = UUID.randomUUID().toString();
+
+        StringBuilder urlBuilder = new StringBuilder("/api/tracker/c/v1/r1/tx/cross/bridge/list?srcChain=");
+        urlBuilder.append(srcChain).append("&destChain=").append(destChain).append("&address=").append(address).append("&limit=").append(limit).append("&offset=").append(offset).append("&t=").append(t);
+        String url = urlBuilder.toString();
+        String oksign = sign(token, url, null);
+        String apikey = getApikey();
+
+        // Create an HTTP client
+        HttpClient client = HttpClient.newHttpClient();
+
+        // Create a request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://www.oklink.com" + url))
+                .header("accept", "application/json")
+                .header("content-type", "application/json")
+                .header("ok-verify-sign", oksign)
+                .header("ok-verify-token", token)
+                .header("x-apikey", apikey)
+                .GET()
+                .build();
+
+        // Send the request and get the response
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return response.body();
+    }
 }
